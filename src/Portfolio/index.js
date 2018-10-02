@@ -6,10 +6,10 @@ class Portfolio extends Component {
   render() {
 
     return (
-      <div>
+      <div className="section">
         <h2 className="header"> Your Portfolio </h2>
+        <hr />
         <ul class="transactionlist">
-          <hr />
             <li>
               <div class="left">
                 <p>AAPL</p>
@@ -21,7 +21,6 @@ class Portfolio extends Component {
                 <p> @ 300.00</p>
               </div>
             </li>
-            <hr />
             <li>
               <div class="left">
                 <p>STWD</p>
@@ -33,7 +32,6 @@ class Portfolio extends Component {
                 <p> @ 20.56 </p>
               </div>
             </li>
-            <hr />
         </ul>  
       </div>
     );

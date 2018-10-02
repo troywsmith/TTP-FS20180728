@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import "../style.css";
 
-
-// Bootstrap Components
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-
-
 class Transactions extends Component {
 
   render() {
 
     return (
-      <div class="activityfeed">
+      <div class="section transactions">
         <h2>
           Transactions
         </h2>
