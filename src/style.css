@@ -51,7 +51,25 @@ body {
   margin: 10px auto;
 }
 
+.portfolio-li {
+  display: flex;
+}
 
+.left {
+  width: 30%;
+  text-align: left;
+}
+
+.middle {
+  width: 30%;
+  text-align: left;
+}
+
+.right {
+  width: 30%;
+  text-align: right;
+  margin-right: 15px;
+}
 
 
 /* Transaction Page  */

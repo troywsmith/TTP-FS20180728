@@ -4,6 +4,7 @@ import "../style.css";
 // Components
 // import BuySell from "../BuySell";
 // import Portfolio from "../Portfolio";
+import Ticker from "../Ticker";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -83,26 +84,40 @@ class Dashboard extends Component {
     } else {
       return (
         <div className="dashboard">
-  
           <div className="section portfolio">
             <h3>Your Portfolio</h3>
             <hr />
             <ul>
-              <li>
-                <div className="left">
-                  <p>{this.state.data.Symbol}</p>
-                </div>
-                <div className="middle">
-                  <p> 48 Shares </p>
-                </div>
-                <div className="right">
-                  <p> @ {this.state.data.latestPrice} </p>
-                </div>
-              </li>
+              {/* {this.state.data.map( (val, key) => {
+                return (
+                  <div> */}
+                    <Ticker 
+                      ticker="AAPL"
+                      qty={48}
+                    />
+                    <Ticker 
+                      ticker="FB"
+                      qty={68}
+
+                    />
+                    <Ticker 
+                      ticker="TWTR"
+                      qty={234}
+
+                    />
+                    <Ticker 
+                      ticker="SNAP"
+                      qty={3423}
+
+                      />
+                  {/* </div>
+                )
+              })} */}
             </ul> 
             <hr />
             <p> Total Balance = $5943.34 </p>
           </div>
+
   
           <div className="section exchange">
             <h3>Cash - $5000.00 </h3>
