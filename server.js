@@ -67,10 +67,10 @@ app.post("/register.json", (request, response) => {
       };
       User.create(newUser);
     })
-    .then(user => {
-      request.session.loggedIn = true;
-      request.session.userId = user.id;
-    })
+    // .then(user => {
+    //   request.session.loggedIn = true;
+    //   request.session.userId = user.id;
+    // })
     .then(user => {
       response.json(user);
     });
@@ -108,7 +108,7 @@ app.post('/new_transaction.json', (request, response) => {
     ticker: request.body.ticker,
     qty: request.body.qty,
     price: request.body.price,
-    timestemp: 'Placeholder'
+    timestamp: request.body.date
   };
   console.log('create transaction:', newTransaction)
   Transaction.create(newTransaction)

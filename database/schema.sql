@@ -18,7 +18,7 @@ CREATE TABLE users (
 
 CREATE TABLE transactions (
   id SERIAL PRIMARY KEY,
-  email TEXT REFERENCES users(email),
+  email TEXT,
   type TEXT NOT NULL,
   ticker TEXT,
   qty INTEGER CHECK (qty > 0),
@@ -28,7 +28,7 @@ CREATE TABLE transactions (
 
 CREATE TABLE holdings (
   id SERIAL PRIMARY KEY,
-  email TEXT REFERENCES users(email),
+  email TEXT ,
   ticker TEXT,
   qty TEXT
 );

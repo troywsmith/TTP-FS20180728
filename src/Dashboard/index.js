@@ -10,7 +10,8 @@ class Dashboard extends Component {
     this.state = {
       ticker: "",
       qty: 0,
-      price: 0
+      price: 0,
+      type: "",
     };
     this.onFormChange = this.onFormChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -20,9 +21,12 @@ class Dashboard extends Component {
     const element = evt.target;
     const elementname = element.name; 
 
+    console.log(elementname, element.value)
+
     let ticker = "";
     let qty = "";
     let price = "";
+    let type = "";
 
     if (elementname === "ticker") {
       ticker = element.value;
@@ -33,8 +37,10 @@ class Dashboard extends Component {
     } else if (elementname === "price") {
       price = element.value;
       this.setState({ price: price });
-    }
-
+    } else if (elementname === "type") {
+      type = element.value;
+      this.setState({ type: type})
+    } 
   }
 
   // When a user clicks login
@@ -46,7 +52,7 @@ class Dashboard extends Component {
       ticker: this.state.ticker,
       qty: this.state.qty,
       price: this.state.price,
-      date: 'placeholder'
+      timestamp: new Date()
     };
     fetch("/new_transaction.json", {
       method: "POST",
@@ -141,10 +147,17 @@ class Dashboard extends Component {
                     placeholder="price"
                   />
                 </div>
+
+                <div>
+                  <p> {this.state.qty * this.state.price} USD </p>
+                </div>
+
                 <select name="type">
-                  <option value="buy">Buy</option>
-                  <option value="sell">Sell</option>
+                  <option value="Buy/Sell">Buy/Sell</option>
+                  <option value="Buy">Buy</option>
+                  <option value="Sell">Sell</option>
                 </select>
+
                 <input
                   className="button"
                   type="button"
