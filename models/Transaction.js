@@ -10,8 +10,8 @@ Transaction.all = () => {
 
 Transaction.create = transaction => {
   return db.one(`
-  INSERT INTO transactions (user_id, type, ticker, qty, price, timestamp) 
-  VALUES ($<user_id>, $<type>, $<ticker>, $<qty>, $<price>, $<timestamp>) 
+  INSERT INTO transactions (email, type, ticker, qty, price, timestamp) 
+  VALUES ($<email>, $<type>, $<ticker>, $<qty>, $<price>, $<timestamp>) 
   RETURNING *`, transaction);
 };
 

@@ -11,7 +11,8 @@ const app = express();
 
 // API for our database models
 const User = require('./models/User');
-const Holdings = require('./models/Holdings');
+const Holding = require('./models/Holding');
+const Transaction = require('./models/Transaction');
 
 // Set the port based on the environment variable (PORT=8080 node server.js)
 // and fallback to 4567
@@ -37,30 +38,19 @@ app.use(
 // All data
 app.get('/.json', (request, response) => {
   Promise.all([
-    User.all()
+    User.all(),
+    Holding.all(),
+    Transaction.all()
   ])
-  .then(([user]) => {
+  .then(([users, holdings, transactions]) => {
     console.log(`about to render api for user`)
     response.json({
-      user: user
+      users: users,
+      holdings: holdings,
+      transactions: transactions
     });
   });
 });
-
-// // Create Transaction
-// app.post('/new_transaction.json', (request, response) => {
-//   // console.log(request)
-//   const transaction_data = {
-//     name: request.body.name,
-//     ticker: request.body.ticker,
-//     qty: request.body.qty,
-//   };
-//   console.log('create message:', newMessage)
-//   Message.create(newMessage)
-//     .then(message => {
-//       response.json(message);
-//     });
-// });
 
 // Register
 app.post("/register.json", (request, response) => {
@@ -106,6 +96,24 @@ app.post("/login.json", (request, response) => {
             console.log('error')
           }
         })
+    });
+});
+
+// Create Transaction
+app.post('/new_transaction.json', (request, response) => {
+  // console.log(request)
+  const newTransaction = {
+    email: request.body.email,
+    type: request.body.type,
+    ticker: request.body.ticker,
+    qty: request.body.qty,
+    price: request.body.price,
+    timestemp: 'Placeholder'
+  };
+  console.log('create transaction:', newTransaction)
+  Transaction.create(newTransaction)
+    .then(transaction => {
+      response.json(transaction);
     });
 });
 

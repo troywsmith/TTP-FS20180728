@@ -11,14 +11,14 @@ DROP TABLE IF EXISTS holdings;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
   password_digest TEXT NOT NULL,
   cash INTEGER CHECK (cash > -1)
 );
 
 CREATE TABLE transactions (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  email TEXT REFERENCES users(email),
   type TEXT NOT NULL,
   ticker TEXT,
   qty INTEGER CHECK (qty > 0),
@@ -28,7 +28,7 @@ CREATE TABLE transactions (
 
 CREATE TABLE holdings (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  email TEXT REFERENCES users(email),
   ticker TEXT,
   qty TEXT
 );

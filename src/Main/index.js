@@ -12,7 +12,8 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      holdings: []
     };
   }
 
@@ -20,7 +21,7 @@ class Main extends Component {
     fetch("/.json")
       .then(response => response.json())
       .then(data => 
-        data.user.forEach( (user) => {
+        data.users.forEach( (user) => {
           if (user.email === this.props.email) {
             this.setState({ user: user })
           }
@@ -48,11 +49,11 @@ class Main extends Component {
               />
             </Tab>
             <Tab eventKey={2} title="Transactions" className="tab">
-              <Transactions 
+              {/* <Transactions 
                 name={this.state.user.name}
                 email={this.state.user.email}
                 cash={this.state.user.cash}            
-              />
+              /> */}
             </Tab>
           </Tabs>
       </div>

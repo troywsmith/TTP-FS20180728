@@ -2,6 +2,26 @@ import React, { Component } from "react";
 import "../style.css";
 
 class Transactions extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+  
+  componentDidMount() {
+    fetch("/.json")
+      .then(response => response.json())
+      .then(data => 
+        data.transactions.forEach( (transaction) => {
+          console.log(transaction)
+          if (transaction.email === this.props.email) {
+            this.setState({ transactions: this.state.transactions.append(transaction) })
+          }
+        })
+      )
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   render() {
 
