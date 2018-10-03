@@ -16,16 +16,16 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-      return fetch('https://ws-api.iextrading.com/1.0/stock/aapl/quote')
-          .then ( (response) => response.json() )
-          .then( (responseJson) => {
-              this.setState({
-                  isLoading: false,
-                  data: responseJson,
-              })
-          })
+    return fetch('https://ws-api.iextrading.com/1.0/stock/aapl/quote')
+      .then ( (response) => response.json() )
+      .then( (responseJson) => {
+        this.setState({
+          isLoading: false,
+          data: responseJson,
+        })
+      })
       .catch((error) => {
-          console.log(error)
+        console.log(error)
       });
   }
 
@@ -33,14 +33,13 @@ class Dashboard extends Component {
     if (this.state.isLoading) {
       return (
       <div className="dashboard">
-        <h2>Welcome to your dashboard, {this.props.name}</h2>
         <p> LOADING... </p>
       </div>
       )
     } else {
       return (
         <div className="dashboard">
-          <h2>Welcome to your dashboard, {this.props.name}</h2>
+          <h2>Welcome to your dashboard, {this.props.user}</h2>
           
           <div className="dashboard-content">
             

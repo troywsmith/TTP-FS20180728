@@ -20,7 +20,6 @@ class App extends Component {
       showRegister: false,
       showMain: false,
       created: false,
-      userData: {},
     };
     this.handleShowLogin = this.handleShowLogin.bind(this);
     this.handleShowRegister = this.handleShowRegister.bind(this);
@@ -29,7 +28,7 @@ class App extends Component {
     this.onFormChange = this.onFormChange.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onRegisterClick = this.onRegisterClick.bind(this);
-    this.getUserData = this.getUserData.bind(this);
+    // this.getUserData = this.getUserData.bind(this);
   }
 
   onFormChange(evt) {
@@ -60,11 +59,6 @@ class App extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.setState({
-      name: "",
-      email: "",
-      password: ""
-    });
     fetch("/login.json", {
       method: "POST",
       body: JSON.stringify(user),
@@ -77,11 +71,29 @@ class App extends Component {
       this.setState({
         showAuth: false,          
         showMain: true
-      });
-    });
-    this.setState({ userData: this.getUserData(this.state) })
-    console.log('userData: ', this.state.userData)
+      })
+    })
+    // this.setState({
+    //   name: "",
+    //   email: "",
+    //   password: ""
+    // })
   }
+
+  // getUserData() {
+  //   // console.log(state);
+  //   this.setState( {
+  //     user: 
+  //       state.api.user.forEach( (user) => {
+  //       if (user.email === state.email) {
+  //         console.log(user.name);
+  //         return user.name;
+  //       } else {
+  //         console.log("NOPE")
+  //       }
+  //     })
+  //   })
+  // }
 
   // When a user registers
   onRegisterClick(evt) {
@@ -114,15 +126,6 @@ class App extends Component {
       });
   }
 
-  componentDidMount() {
-    fetch("/.json")
-      .then(response => response.json())
-      .then(api => this.setState({ api }))
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   handleShowLogin() {
     this.setState({ showLogin: true });
   }
@@ -138,19 +141,8 @@ class App extends Component {
   handleCloseRegister() {
     this.setState({ showRegister: false });
   }
-
-  getUserData(state) {
-    state.api.user.forEach( function(user) {
-      if (user.email === state.email) {
-        console.log(user)
-        return user
-      } else {
-        console.log("NOPE")
-      }
-    })
-  }
-
   
+
   render() {
     return (
     

@@ -87,6 +87,7 @@ app.post("/register.json", (request, response) => {
 
 // Login
 app.post("/login.json", (request, response) => {
+  console.log(request)
   const email = request.body.email;
   const password = request.body.password;
   User.findByEmail(email)
@@ -98,8 +99,10 @@ app.post("/login.json", (request, response) => {
           if (isPasswordCorrect) {
             request.session.loggedIn = true;
             request.session.userId = user.id;
-            console.log(request.session)
+            // console.log(request.session)
             return response.redirect(301, "/");
+          } else {
+            console.log('error')
           }
         })
     });

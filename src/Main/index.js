@@ -12,10 +12,23 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-
-      }
+      user: ''
     };
+  }
+
+  componentDidMount() {
+    fetch("/.json")
+      .then(response => response.json())
+      .then(data => 
+        data.user.forEach( (user) => {
+          if (user.email === this.props.email) {
+            this.setState({ user: user.name })
+          }
+        })
+      )
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   // componentDidMount() {
@@ -45,13 +58,13 @@ class Main extends Component {
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
             <Tab eventKey={1} title="Dashboard" className="tab">
               <Dashboard 
-                user={this.state.name}
+                user={this.state.user}
               />
             </Tab>
             <Tab eventKey={2} title="Transactions" className="tab">
-              <Transactions 
-                user={this.state.name}
-              />
+              {/* <Transactions 
+                userData={this.props.userData}
+              /> */}
             </Tab>
           </Tabs>
       </div>
