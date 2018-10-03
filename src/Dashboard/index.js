@@ -33,14 +33,14 @@ class Dashboard extends Component {
     if (this.state.isLoading) {
       return (
       <div className="dashboard">
-        <h2>Welcome to your dashboard, {this.props.user.name}</h2>
+        <h2>Welcome to your dashboard, {this.props.name}</h2>
         <p> LOADING... </p>
       </div>
       )
     } else {
       return (
         <div className="dashboard">
-          <h2>Welcome to your dashboard, {this.props.user.name}</h2>
+          <h2>Welcome to your dashboard, {this.props.name}</h2>
           
           <div className="dashboard-content">
             

@@ -12,9 +12,28 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      user: {
+
+      }
     };
   }
+
+  // componentDidMount() {
+  //   fetch("/user.json", {
+  //     method: "POST",
+  //     body: JSON.stringify(this.props.email),
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-type": "application/json"
+  //     }
+  //   })  
+  //   .then(response => response.json())
+  //   .then(user => this.setState({ user }))
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  // }
+
 
   render() {
     return (
@@ -26,12 +45,12 @@ class Main extends Component {
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
             <Tab eventKey={1} title="Dashboard" className="tab">
               <Dashboard 
-                user={this.props.user}
+                user={this.state.name}
               />
             </Tab>
             <Tab eventKey={2} title="Transactions" className="tab">
               <Transactions 
-                user={this.props.user}
+                user={this.state.name}
               />
             </Tab>
           </Tabs>

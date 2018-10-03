@@ -9,26 +9,26 @@ class Portfolio extends Component {
       <div className="section">
         <h2 className="header"> Your Portfolio </h2>
         <hr />
-        <ul class="transactionlist">
+        <ul className="transactionlist">
             <li>
-              <div class="left">
+              <div className="left">
                 <p>AAPL</p>
               </div>
-              <div class="middle">
+              <div className="middle">
                 <p> 18 Shares </p>
               </div>
-              <div class="right">
+              <div className="right">
                 <p> @ 300.00</p>
               </div>
             </li>
             <li>
-              <div class="left">
+              <div className="left">
                 <p>STWD</p>
               </div>
-              <div class="middle">
+              <div className="middle">
                 <p> 48 Shares </p>
               </div>
-              <div class="right">
+              <div className="right">
                 <p> @ 20.56 </p>
               </div>
             </li>

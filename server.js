@@ -27,121 +27,41 @@ app.use(bodyParser.urlencoded({
 
 app.use(
   session({
-    secret: "troys super secret password",
+    secret: "secret",
     resave: false,
     saveUninitialized: true
   })
 );
 
+// All data
 app.get('/.json', (request, response) => {
   Promise.all([
     User.all()
-    // Activity.all(),
-    // Trip.all(),
-    // List.all(),
-    // Message.all()
   ])
-    .then(([user]) => {
-      console.log(`about to render api for user: ` + user)
-      response.json({
-        // trip: trip,
-        user: user
-        // activity: activity,
-        // list: list,
-        // message: message
-      });
+  .then(([user]) => {
+    console.log(`about to render api for user`)
+    response.json({
+      user: user
     });
+  });
 });
 
-// // Create Activity
-// app.post('/new_activity.json', (request, response) => {
+// // Create Transaction
+// app.post('/new_transaction.json', (request, response) => {
 //   // console.log(request)
-//   const newActivity = {
-//     activity_name: request.body.activity_name,
-//     date: request.body.date,
-//     time: request.body.time
+//   const transaction_data = {
+//     name: request.body.name,
+//     ticker: request.body.ticker,
+//     qty: request.body.qty,
 //   };
-//   console.log('Add new activity:', newActivity)
-//   Activity.create(newActivity)
-//     .then(activity => {
-//       response.json({
-//         activity: activity
-//       });
+//   console.log('create message:', newMessage)
+//   Message.create(newMessage)
+//     .then(message => {
+//       response.json(message);
 //     });
 // });
 
-// // Create List Item
-// app.post('/new_list_item.json', (request, response) => {
-//   // console.log(request)
-//   const newListItem = {
-//     item: request.body.item
-//   };
-//   console.log('create list item:', newListItem)
-//   List.create(newListItem)
-//     .then(listItem => {
-//       response.json(listItem);
-//     });
-// });
-
-// Create Transaction
-app.post('/new_transaction.json', (request, response) => {
-  // console.log(request)
-  const transaction_data = {
-    name: request.body.name,
-    ticker: request.body.ticker,
-    name: request.body.qty,
-  };
-  console.log('create message:', newMessage)
-  Message.create(newMessage)
-    .then(message => {
-      response.json(message);
-    });
-});
-
-// // Update List Item
-// app.put('/list/:id.json', (request, response) => {
-//   console.log(request.params);
-//   let id = request.params.id;
-//   console.log(request.params);
-//   console.log('logging ID for the update. this is request.params.id', id);
-
-//   const updatedListItem = {
-//     id: id,
-//     item: request.body.item
-//   };
-//   console.log('update list item:', updatedListItem)
-//   List.update(updatedListItem)
-//     .then(listItem => {
-//       response.json({
-//         status: 'updated'
-//       });
-//     });
-// });
-
-// // Delete List Item
-// app.delete('/list/:id.json', (request, response) => {
-//   const id = Number(request.params.id);
-//   List.delete(id)
-//     .then(list => {
-//       response.json(list)
-//         .then(deleteItem => {
-//           response.json(deleteItem)
-//         })
-//     });
-// });
-
-// app.delete('/activity/:id.json', (request, response) => {
-//   const id = Number(request.params.id);
-//   Activity.delete(id)
-//     .then(activity => {
-//       response.json(activity)
-//         .then(deleteActivity => {
-//           response.json(deleteActivity)
-//         })
-//     });
-// });
-
-//register user
+// Register
 app.post("/register.json", (request, response) => {
   const name = request.body.name;
   const email = request.body.email;
@@ -154,36 +74,49 @@ app.post("/register.json", (request, response) => {
         email: email,
         password_digest: hash,
       };
-      console.log('create new user:', newUser)
       User.create(newUser);
     })
-    // .then(user => {
-    //   request.session.loggedIn = true;
-    //   request.session.userId = user.id;
-    // })
+    .then(user => {
+      request.session.loggedIn = true;
+      request.session.userId = user.id;
+    })
     .then(user => {
       response.json(user);
     });
 });
 
-// //login user
-// app.post("/login.json", (request, response) => {
-//   const username = request.body.username;
-//   const password = request.body.password;
-//   console.log('username: ' + username);
-//   console.log('password: ' + password);
-//   User.findByUsername(username)
-//     .then(user => {
-//       return bcrypt
-//         .compare(password, user.password_digest)
-//         .then(isPasswordCorrect => {
-//           if (isPasswordCorrect) {
-//             request.session.loggedIn = true;
-//             request.session.userId = user.id;
-//             return response.redirect(301, "/");
-//           }
-//         })
+// Login
+app.post("/login.json", (request, response) => {
+  const email = request.body.email;
+  const password = request.body.password;
+  User.findByEmail(email)
+    .then(user => {
+      console.log(user)
+      return bcrypt
+        .compare(password, user.password_digest)
+        .then(isPasswordCorrect => {
+          if (isPasswordCorrect) {
+            request.session.loggedIn = true;
+            request.session.userId = user.id;
+            console.log(request.session)
+            return response.redirect(301, "/");
+          }
+        })
+    });
+});
+
+
+// // Get User Data
+// app.get('/user.json', (request, response) => {
+//   userID = request.session.userId
+//   console.log(userID)
+//   User.getUserData(userID)
+//   .then((user) => {
+//     console.log(`about to render api for user: ` + user)
+//     response.json({
+//       user: user
 //     });
+//   });
 // });
 
 

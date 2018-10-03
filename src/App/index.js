@@ -15,16 +15,12 @@ class App extends Component {
       name: "",
       email: "",
       password: "",
-      showAuth: false,
+      showAuth: true,
       showLogin: false,
       showRegister: false,
-      showMain: true,
+      showMain: false,
       created: false,
-      user: {
-        name: "Troy",
-        email: "troy@troywsmith.com",
-        cash: 5000
-      }
+      userData: {},
     };
     this.handleShowLogin = this.handleShowLogin.bind(this);
     this.handleShowRegister = this.handleShowRegister.bind(this);
@@ -33,6 +29,7 @@ class App extends Component {
     this.onFormChange = this.onFormChange.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onRegisterClick = this.onRegisterClick.bind(this);
+    this.getUserData = this.getUserData.bind(this);
   }
 
   onFormChange(evt) {
@@ -59,8 +56,7 @@ class App extends Component {
   // When a user clicks login
   onLoginClick(evt) {
     evt.preventDefault();
-    const newUser = {
-      name: this.state.name,
+    const user = {
       email: this.state.email,
       password: this.state.password
     };
@@ -71,19 +67,20 @@ class App extends Component {
     });
     fetch("/login.json", {
       method: "POST",
-      body: JSON.stringify(newUser),
+      body: JSON.stringify(user),
       headers: {
         Accept: "application/json",
         "Content-type": "application/json"
       }
     })
-      // .then(response => response.json())
-      .then(user => {
-        this.setState({
-          showAuth: false,          
-          showMain: true
-        });
+    .then(user => {
+      this.setState({
+        showAuth: false,          
+        showMain: true
       });
+    });
+    this.setState({ userData: this.getUserData(this.state) })
+    console.log('userData: ', this.state.userData)
   }
 
   // When a user registers
@@ -140,6 +137,17 @@ class App extends Component {
 
   handleCloseRegister() {
     this.setState({ showRegister: false });
+  }
+
+  getUserData(state) {
+    state.api.user.forEach( function(user) {
+      if (user.email === state.email) {
+        console.log(user)
+        return user
+      } else {
+        console.log("NOPE")
+      }
+    })
   }
 
   
@@ -239,9 +247,7 @@ class App extends Component {
 
       {this.state.showMain ? (
         <Main
-          name={this.state.name}
           email={this.state.email}
-          user={this.state.user}
         />
       ) : null }
 
