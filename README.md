@@ -4,13 +4,6 @@
 
 For this assessment, you’ll need to implement a web based stock portfolio app. For the purpose of this exercise a stock is simply an asset that can be bought or sold (like a house) at a price that continuously rises and falls throughout the day. Up to date pricing information is available for free via the IEX API. A guide to the UI can be observed below. Your implementation doesn’t need to be an exact match but should implement all of the listed user stories. In addition to the user stories, your submission will be assessed for readability, code organization, commit history clarity, overall UI/UX, and overall API design.
 
-### Design & Style Guide
-
-![Regiser](/images/Register.png)
-![Sign In](/images/SignIn.png)
-![Portfolio](/images/Portfolio.png)
-![Transactions](/images/Transactions.png)
-
 
 ### User Stories
 
@@ -35,3 +28,11 @@ values so that I can review performance.
 - Display red when the current price is less than the day’s open price.
 - Display grey when the current price is equal to the day’s open price.
 - Display green when the current price is greater than the day’s open price.
+
+
+### Design & Style Guide
+
+![Regiser](/images/Register.png)
+![Sign In](/images/SignIn.png)
+![Portfolio](/images/Portfolio.png)
+![Transactions](/images/Transactions.png)

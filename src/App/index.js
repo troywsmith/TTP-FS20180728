@@ -12,7 +12,7 @@ class App extends Component {
       name: "",
       email: "",
       password: "",
-      showLogin: false,
+      showLogin: true,
       showMain: true,
       // created: false
     };
@@ -25,8 +25,9 @@ class App extends Component {
     return (
     
     <div className="App">
+
       {this.state.showLogin ? (
-        <div style={{ marginTop: 50 + "px" }}>
+        <div className="section auth">
           <form onChange={this.onFormChange}>
             <div>
               <input
@@ -66,13 +67,15 @@ class App extends Component {
             />
           </form>
         </div>
-      ) : null}
+      ) : null }
+
       {this.state.showMain ? (
         <Main
           name={this.state.name}
           email={this.state.email}
         />
-      ) : null}
+      ) : null }
+
     </div>
   
     )
