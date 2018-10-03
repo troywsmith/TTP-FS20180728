@@ -27,9 +27,30 @@ body {
   margin: 20px auto;
 }
 
+/* Main Page */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  font-size: 24px;
+  height: 70px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(6, 103, 208);
+}
+
+.header button {
+  background-color: inherit;
+  color: inherit;
+  border-radius: 5px;
+}
 
 /* Dashboard Page */
 .dashboard {
+
+}
+
+.dashboard-content {
   display: flex;
 }
 

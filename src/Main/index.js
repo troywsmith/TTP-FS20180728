@@ -9,18 +9,32 @@ import Dashboard from '../Dashboard';
 import Transactions from '../Transactions';
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+  }
 
   render() {
     return (
       <div className="Component">
-        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
-          <Tab eventKey={1} title="Dashboard" className="tab">
-            <Dashboard />
-          </Tab>
-          <Tab eventKey={2} title="Transactions" className="tab">
-            <Transactions />
-          </Tab>
-        </Tabs>
+        <div className="header">
+          <p>stockbase</p>
+          <button>Sign out</button>
+        </div>
+          <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
+            <Tab eventKey={1} title="Dashboard" className="tab">
+              <Dashboard 
+                user={this.props.user}
+              />
+            </Tab>
+            <Tab eventKey={2} title="Transactions" className="tab">
+              <Transactions 
+                user={this.props.user}
+              />
+            </Tab>
+          </Tabs>
       </div>
     )
   }

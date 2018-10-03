@@ -33,106 +33,67 @@ class Dashboard extends Component {
     if (this.state.isLoading) {
       return (
       <div className="dashboard">
-
-        <div className="section portfolio">
-          <h3>Your Portfolio</h3>
-          <hr />
-          <ul>
-              <li>
-                <div className="left">
-                  <p>AAPL</p>
-                </div>
-                <div className="middle">
-                  <p> 18 Shares </p>
-                </div>
-                <div className="right">
-                  <p> @ 300.00</p>
-                </div>
-              </li>
-              <li>
-                <div className="left">
-                  <p>STWD</p>
-                </div>
-                <div className="middle">
-                  <p> 48 Shares </p>
-                </div>
-                <div className="right">
-                  <p> @ 20.56 </p>
-                </div>
-              </li>
-          </ul> 
-          <hr />
-          <p> Total Balance = $5943.34 </p>
-        </div>
-
-        <div className="section exchange">
-          <h3>Cash - $5000.00 </h3>
-          <hr />
-          <form action="/newtransaction" method="POST" className="exchangeform">
-            <input id="ticker" type="text" list="datalist" name="ticker" placeholder="  Ticker" />
-            <datalist id="datalist">
-
-            </datalist>
-            <input id="quantity" type="number" name="quantity" placeholder="  QTY" />
-            <button type="submit">Buy</button>
-            <button type="submit">Sell</button>
-          </form>
-        </div>
-
+        <h2>Welcome to your dashboard, {this.props.user.name}</h2>
+        <p> LOADING... </p>
       </div>
       )
     } else {
       return (
         <div className="dashboard">
-          <div className="section portfolio">
-            <h3>Your Portfolio</h3>
-            <hr />
-            <ul>
-              {/* {this.state.data.map( (val, key) => {
-                return (
-                  <div> */}
-                    <Ticker 
-                      ticker="AAPL"
-                      qty={48}
-                    />
-                    <Ticker 
-                      ticker="FB"
-                      qty={68}
-
-                    />
-                    <Ticker 
-                      ticker="TWTR"
-                      qty={234}
-
-                    />
-                    <Ticker 
-                      ticker="SNAP"
-                      qty={3423}
+          <h2>Welcome to your dashboard, {this.props.user.name}</h2>
+          
+          <div className="dashboard-content">
+            
+            <div className="section portfolio">
+              <h3>Your Portfolio</h3>
+              <hr />
+              <ul>
+                {/* {this.state.data.map( (val, key) => {
+                  return (
+                    <div> */}
+                      <Ticker 
+                        ticker="AAPL"
+                        qty={48}
+                      />
+                      <Ticker 
+                        ticker="FB"
+                        qty={68}
 
                       />
-                  {/* </div>
-                )
-              })} */}
-            </ul> 
-            <hr />
-            <p> Total Balance = $5943.34 </p>
-          </div>
+                      <Ticker 
+                        ticker="TWTR"
+                        qty={234}
 
-  
-          <div className="section exchange">
-            <h3>Cash - $5000.00 </h3>
-            <hr />
-            <form action="/newtransaction" method="POST" className="exchangeform">
-              <input id="ticker" type="text" list="datalist" name="ticker" placeholder="  Ticker" />
-              <datalist id="datalist">
-  
-              </datalist>
-              <input id="quantity" type="number" name="quantity" placeholder="  QTY" />
-              <button type="submit">Buy</button>
-              <button type="submit">Sell</button>
-            </form>
+                      />
+                      <Ticker 
+                        ticker="SNAP"
+                        qty={3423}
+
+                        />
+                    {/* </div>
+                  )
+                })} */}
+              </ul> 
+              <hr />
+              <p> Total Balance = $5943.34 </p>
+            </div>
+
+            <div className="section exchange">
+              <h3>Cash - $5000.00 </h3>
+              <hr />
+              <form action="/newtransaction" method="POST" className="exchangeform">
+                <input id="ticker" type="text" list="datalist" name="ticker" placeholder="  Ticker" />
+                <datalist id="datalist">
+    
+                </datalist>
+                <input id="quantity" type="number" name="quantity" placeholder="  QTY" />
+                <button type="submit">Buy</button>
+                <button type="submit">Sell</button>
+              </form>
+            </div>
+
           </div>
-  
+          
         </div>
       );
     }
