@@ -2,45 +2,22 @@ import React, { Component } from "react";
 import "../style.css";
 
 // Components
-// import BuySell from "../BuySell";
-// import Portfolio from "../Portfolio";
 import Ticker from "../Ticker";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-        isLoading: true,
-        data: null,
-    }
+
   }
 
-  componentDidMount () {
-    return fetch('https://ws-api.iextrading.com/1.0/stock/aapl/quote')
-      .then ( (response) => response.json() )
-      .then( (responseJson) => {
-        this.setState({
-          isLoading: false,
-          data: responseJson,
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-      });
-  }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-      <div className="dashboard">
-        <p> LOADING... </p>
-      </div>
-      )
-    } else {
+
       return (
         <div className="dashboard">
-          <h2>Welcome to your dashboard, {this.props.user}</h2>
-          
+
+          <h2>Welcome to your dashboard, {this.props.name}</h2>
+  
           <div className="dashboard-content">
             
             <div className="section portfolio">
@@ -78,7 +55,7 @@ class Dashboard extends Component {
             </div>
 
             <div className="section exchange">
-              <h3>Cash - $5000.00 </h3>
+              <h3>Cash - ${this.props.cash} </h3>
               <hr />
               <form action="/newtransaction" method="POST" className="exchangeform">
                 <input id="ticker" type="text" list="datalist" name="ticker" placeholder="  Ticker" />
@@ -95,7 +72,7 @@ class Dashboard extends Component {
           
         </div>
       );
-    }
+
   }
 }
 

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "../style.css";
 
-// Bootstrap Components
-import { Modal, Button } from 'react-bootstrap';
-
 // Components
 import Main from '../Main'
+
+// Bootstrap Components
+import { Modal, Button } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +28,6 @@ class App extends Component {
     this.onFormChange = this.onFormChange.bind(this);
     this.onLoginClick = this.onLoginClick.bind(this);
     this.onRegisterClick = this.onRegisterClick.bind(this);
-    // this.getUserData = this.getUserData.bind(this);
   }
 
   onFormChange(evt) {
@@ -80,20 +79,6 @@ class App extends Component {
     // })
   }
 
-  // getUserData() {
-  //   // console.log(state);
-  //   this.setState( {
-  //     user: 
-  //       state.api.user.forEach( (user) => {
-  //       if (user.email === state.email) {
-  //         console.log(user.name);
-  //         return user.name;
-  //       } else {
-  //         console.log("NOPE")
-  //       }
-  //     })
-  //   })
-  // }
 
   // When a user registers
   onRegisterClick(evt) {

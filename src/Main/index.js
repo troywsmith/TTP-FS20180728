@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import "../style.css";
 
-// Bootstrap Components
-import { Tabs, Tab } from 'react-bootstrap';
-
 // Components
 import Dashboard from '../Dashboard';
 import Transactions from '../Transactions';
+
+// Bootstrap Components
+import { Tabs, Tab } from 'react-bootstrap';
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: ''
+      user: {}
     };
   }
 
@@ -22,7 +22,7 @@ class Main extends Component {
       .then(data => 
         data.user.forEach( (user) => {
           if (user.email === this.props.email) {
-            this.setState({ user: user.name })
+            this.setState({ user: user })
           }
         })
       )
@@ -30,22 +30,6 @@ class Main extends Component {
         console.log(err);
       });
   }
-
-  // componentDidMount() {
-  //   fetch("/user.json", {
-  //     method: "POST",
-  //     body: JSON.stringify(this.props.email),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-type": "application/json"
-  //     }
-  //   })  
-  //   .then(response => response.json())
-  //   .then(user => this.setState({ user }))
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  // }
 
 
   render() {
@@ -58,13 +42,17 @@ class Main extends Component {
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
             <Tab eventKey={1} title="Dashboard" className="tab">
               <Dashboard 
-                user={this.state.user}
+                name={this.state.user.name}
+                email={this.state.user.email}
+                cash={this.state.user.cash}
               />
             </Tab>
             <Tab eventKey={2} title="Transactions" className="tab">
-              {/* <Transactions 
-                userData={this.props.userData}
-              /> */}
+              <Transactions 
+                name={this.state.user.name}
+                email={this.state.user.email}
+                cash={this.state.user.cash}            
+              />
             </Tab>
           </Tabs>
       </div>

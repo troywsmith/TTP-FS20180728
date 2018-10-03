@@ -2,12 +2,6 @@ const db = require('../database/connection');
 
 const Holdings = {};
 
-Holdings.all = () => {
-  return db.any(`
-  SELECT * 
-  FROM users`);
-};
-
 Holdings.findById = user_id =>
   db.one(`
   SELECT * 

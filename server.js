@@ -11,6 +11,7 @@ const app = express();
 
 // API for our database models
 const User = require('./models/User');
+const Holdings = require('./models/Holdings');
 
 // Set the port based on the environment variable (PORT=8080 node server.js)
 // and fallback to 4567
@@ -107,21 +108,6 @@ app.post("/login.json", (request, response) => {
         })
     });
 });
-
-
-// // Get User Data
-// app.get('/user.json', (request, response) => {
-//   userID = request.session.userId
-//   console.log(userID)
-//   User.getUserData(userID)
-//   .then((user) => {
-//     console.log(`about to render api for user: ` + user)
-//     response.json({
-//       user: user
-//     });
-//   });
-// });
-
 
 // Start the web server listening on the provided port.
 const server = app.listen(PORT, () => {
