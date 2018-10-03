@@ -6,7 +6,7 @@ For this assessment, you’ll need to implement a web based stock portfolio app.
 
 ### Design & Style Guide
 
-![Regiser](../images/Register.png?raw=true "Register")
+![Regiser](../images/Register.png?)
 ![Sign In](../images/SignIn.png?raw=true "Sign In")
 ![Portfolio](../images/Portfolio.png?raw=true "Portfolio")
 ![Transactions](../images/Transactions.png?raw=true "Transactions")
