@@ -112,7 +112,7 @@ app.post('/new_transaction.json', (request, response) => {
     timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
   };
   console.log('create transaction:', newTransaction)
-  Transaction.create(newTransaction)
+  Transaction.buy(newTransaction)
     .then(transaction => {
       response.json(transaction);
     });

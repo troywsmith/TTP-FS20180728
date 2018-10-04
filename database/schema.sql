@@ -30,5 +30,5 @@ CREATE TABLE holdings (
   id SERIAL PRIMARY KEY,
   email TEXT ,
   ticker TEXT,
-  qty TEXT
+  qty INTEGER
 );

@@ -37,7 +37,7 @@ class Transactions extends Component {
         </h2>
         <ul className="transactionlist">
           <hr />
-            {this.state.transactions.map( transaction => {
+            {this.state.transactions.reverse().map( transaction => {
               return (
                 <li className="transaction-li">
                   <div className="left">

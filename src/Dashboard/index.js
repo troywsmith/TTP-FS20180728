@@ -20,15 +20,16 @@ class Dashboard extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
-
   componentDidMount() {
     fetch("/.json")
       .then(response => response.json())
       .then(data => 
         data.holdings.forEach( (holding) => {
           if (holding.email === this.props.email) {
-            console.log(holding.email, this.props.email)
-            this.setState({ holding: holding })
+            console.log("holding: ", holding)
+            this.setState(prevState => ({
+              holdings: [...prevState.holdings, holding]
+            }))
           }
         })
       )
