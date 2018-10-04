@@ -4,7 +4,9 @@ import "../style.css";
 class Transactions extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      transactions: [],
+    };
   }
   
   componentDidMount() {
@@ -12,9 +14,12 @@ class Transactions extends Component {
       .then(response => response.json())
       .then(data => 
         data.transactions.forEach( (transaction) => {
-          console.log(transaction)
+          console.log(transaction.email, this.props.email)
           if (transaction.email === this.props.email) {
-            this.setState({ transactions: this.state.transactions.append(transaction) })
+            console.log("TRANSACTION: ", transaction)
+            this.setState(prevState => ({
+              transactions: [...prevState.transactions, transaction]
+            }))
           }
         })
       )
@@ -32,66 +37,22 @@ class Transactions extends Component {
         </h2>
         <ul className="transactionlist">
           <hr />
-            <li>
-              <div className="left">
-                <p>BUY (AAPL)</p>
-              </div>
-              <div className="middle">
-                <p> 6 Shares </p>
-              </div>
-              <div className="right">
-                <p> @ 300.00</p>
-              </div>
-            </li>
-            <hr />
-            <li>
-              <div className="left">
-                <p>BUY (STWD)</p>
-              </div>
-              <div className="middle">
-                <p> 40 Shares </p>
-              </div>
-              <div className="right">
-                <p> @ 20.56 </p>
-              </div>
-            </li>
-            <hr />
-            <li>
-              <div className="left">
-                <p>BUY (AAPL)</p>
-              </div>
-              <div className="middle">
-                <p> 6 Shares </p>
-              </div>
-              <div className="right">
-                <p> @ 300.00</p>
-              </div>
-            </li>
-            <hr />
-            <li>
-              <div className="left">
-                <p>BUY (STWD)</p>
-              </div>
-              <div className="middle">
-                <p> 40 Shares </p>
-              </div>
-              <div className="right">
-                <p> @ 20.56 </p>
-              </div>
-            </li>
-            <hr />
-            <li>
-              <div className="left">
-                <p>BUY (AAPL)</p>
-              </div>
-              <div className="middle">
-                <p> 6 Shares </p>
-              </div>
-              <div className="right">
-                <p> @ 300.00</p>
-              </div>
-            </li>
-            <hr />
+            {this.state.transactions.map( transaction => {
+              return (
+                <li className="transaction-li">
+                  <div className="left">
+                    <p>{transaction.type} {transaction.ticker}</p>
+                  </div>
+                  <div className="middle">
+                    <p> {transaction.qty} Shares </p>
+                  </div>
+                  <div className="right">
+                    <p> @ {transaction.price}</p>
+                  </div>
+                  <hr />
+                </li>
+              )
+            })}
         </ul>   
       </div>
     );

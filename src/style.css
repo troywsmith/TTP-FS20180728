@@ -82,6 +82,10 @@ body {
   display: flex;
 }
 
+.transaction-li {
+  display: flex;
+}
+
 .left {
   width: 30%;
   text-align: left;
@@ -89,7 +93,7 @@ body {
 
 .middle {
   width: 30%;
-  text-align: left;
+  text-align: center;
 }
 
 .right {

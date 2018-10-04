@@ -12,8 +12,9 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       user: {},
-      holdings: []
+      holdings: [],
     };
   }
 
@@ -23,10 +24,12 @@ class Main extends Component {
       .then(data => 
         data.users.forEach( (user) => {
           if (user.email === this.props.email) {
+            console.log('Main User: ', user)
             this.setState({ user: user })
           }
         })
       )
+      .then(this.setState({isLoading: false}))
       .catch(err => {
         console.log(err);
       });
@@ -40,6 +43,7 @@ class Main extends Component {
           <p>stockbase</p>
           <button>Sign out</button>
         </div>
+          {this.state.isLoading ? null : 
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
             <Tab eventKey={1} title="Dashboard" className="tab">
               <Dashboard 
@@ -49,13 +53,14 @@ class Main extends Component {
               />
             </Tab>
             <Tab eventKey={2} title="Transactions" className="tab">
-              {/* <Transactions 
+              <Transactions 
                 name={this.state.user.name}
                 email={this.state.user.email}
                 cash={this.state.user.cash}            
-              /> */}
+              />
             </Tab>
           </Tabs>
+          }
       </div>
     )
   }

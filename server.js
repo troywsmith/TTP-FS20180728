@@ -3,6 +3,7 @@ const session = require("express-session");
 const path = require('path');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const moment = require('moment');
 const bcrypt = require('bcrypt');
 saltRounds = 10;
 
@@ -108,7 +109,7 @@ app.post('/new_transaction.json', (request, response) => {
     ticker: request.body.ticker,
     qty: request.body.qty,
     price: request.body.price,
-    timestamp: request.body.date
+    timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
   };
   console.log('create transaction:', newTransaction)
   Transaction.create(newTransaction)

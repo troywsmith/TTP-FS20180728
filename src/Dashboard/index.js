@@ -8,6 +8,9 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
+      user: {},
+      holdings: [],
       ticker: "",
       qty: 0,
       price: 0,
@@ -15,6 +18,24 @@ class Dashboard extends Component {
     };
     this.onFormChange = this.onFormChange.bind(this);
     this.onClick = this.onClick.bind(this);
+  }
+
+
+  componentDidMount() {
+    fetch("/.json")
+      .then(response => response.json())
+      .then(data => 
+        data.holdings.forEach( (holding) => {
+          if (holding.email === this.props.email) {
+            console.log(holding.email, this.props.email)
+            this.setState({ holding: holding })
+          }
+        })
+      )
+      .then(this.setState({isLoading: false}))
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   onFormChange(evt) {
@@ -51,8 +72,7 @@ class Dashboard extends Component {
       type: this.state.type,
       ticker: this.state.ticker,
       qty: this.state.qty,
-      price: this.state.price,
-      timestamp: new Date()
+      price: this.state.price
     };
     fetch("/new_transaction.json", {
       method: "POST",
@@ -74,22 +94,6 @@ class Dashboard extends Component {
     //   password: ""
     // })
   }
-
-  componentDidMount() {
-    fetch("/.json")
-      .then(response => response.json())
-      .then(data => 
-        data.holdings.forEach( (holding) => {
-          console.log(holding)
-          if (holding.email === this.props.email) {
-            this.setState({ holdings: this.state.holdings.append(holding) })
-          }
-        })
-      )
-      .catch(err => {
-        console.log(err);
-      });
-  }
   
 
   render() {
@@ -98,21 +102,26 @@ class Dashboard extends Component {
         <div className="dashboard">
 
           <h2>Welcome to your dashboard, {this.props.name}</h2>
-  
+
+          {this.state.isLoading ? null : 
+          
           <div className="dashboard-content">
             
             <div className="section portfolio">
               <h3>Your Portfolio</h3>
               <hr />
               <ul>
-                {/* {this.state.holdings.map( (holding, key) => {
+                {this.state.holdings ?
+                  this.state.holdings.map( (holding, key) => {
                   return (
                     <Ticker 
                       ticker={holding.ticker}
                       qty={holding.qty}
                     />
                   )
-                  })} */}
+                  }) : null
+                  }
+                  
               </ul> 
               <hr />
               <p> Total Balance = $5943.34 </p>
@@ -169,7 +178,9 @@ class Dashboard extends Component {
             </div>
 
           </div>
-          
+
+          }
+
         </div>
       );
 
