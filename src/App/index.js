@@ -132,10 +132,12 @@ class App extends Component {
     return (
     
     <div className="App">
-
+      <div className="header">
+        <p className="logo">stockbase</p>
+      </div>
       {this.state.showAuth ? (
-      <div>
-        
+      <div className="auth-div">
+        <h3> Welcome to Stockbase </h3>
         <Button variant="Register" onClick={this.handleShowRegister}>
             Sign Up
         </Button>
@@ -183,7 +185,7 @@ class App extends Component {
 
 
         <Button variant="LogIn" onClick={this.handleShowLogin}>
-            Log In
+            Log in
         </Button>
         <Modal show={this.state.showLogin} onHide={this.handleCloseLogin}>
           <Modal.Header closeButton>

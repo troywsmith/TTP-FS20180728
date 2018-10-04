@@ -21,13 +21,7 @@ body {
   border-color: rgb(218, 225, 233);
 }
 
-/* Authorization Page */
-.auth {
-  width: 20%;
-  margin: 20px auto;
-}
-
-/* Main Page */
+/* Header  */
 .header {
   display: flex;
   justify-content: space-between;
@@ -44,6 +38,34 @@ body {
   color: inherit;
   border-radius: 5px;
 }
+
+.logo {
+  margin: auto 20px;
+}
+
+
+/* Authorization Page */
+.auth {
+  width: 20%;
+  margin: 20px auto;
+}
+
+.auth-div {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  width: 100%;
+  margin: 10% auto;
+}
+
+.auth-div * {
+  width: 350px;
+  margin: 10px auto;
+}
+
+/* Main Page */
+
+
 
 /* Dashboard Page */
 .dashboard {

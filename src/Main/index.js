@@ -39,10 +39,6 @@ class Main extends Component {
   render() {
     return (
       <div className="Component">
-        <div className="header">
-          <p>stockbase</p>
-          <button>Sign out</button>
-        </div>
           {this.state.isLoading ? null : 
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="tabs">
             <Tab eventKey={1} title="Dashboard" className="tab">

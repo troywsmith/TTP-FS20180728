@@ -58,7 +58,7 @@ class Stock extends Component {
       return (
         <li className="portfolio-li">
           <div className="left">
-            <p> {this.state.data.symbol} </p>
+            <p className={this.state.class}> {this.state.data.symbol} </p>
           </div>
           <div className="left">
             <p> {this.props.qty} Shares </p>
