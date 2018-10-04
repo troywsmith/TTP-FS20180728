@@ -3,40 +3,63 @@ import "../style.css";
 
 // Components
 import Ticker from "../Ticker";
+import PriceFinder from "../PriceFinder";
+import CalculateTotal from "../Calculatetotal";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
+      toggleFormChange: false,
       user: {},
       holdings: [],
       ticker: "",
-      qty: 0,
       price: 0,
+      qty: 0,
+      total: 0,
       type: "",
     };
-    this.onFormChange = this.onFormChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.fetchAPI = this.fetchAPI.bind(this)
+  }
+
+  fetchAPI() {
+    return fetch("/.json")
+    .then(response => response.json())
+  }
+
+  fetchPrice(ticker) {
+    return fetch(`https://ws-api.iextrading.com/1.0/stock/${ticker}/quote`)
+      .then ( (response) => response.json() )
+      .then( (responseJson) => {
+        this.setState({ 
+          price: responseJson.latestPrice
+        })    
+      })
+      .catch((error) => {
+          console.log(error)
+      });
+  }
+
+  calculateTotal(price, qty) {
+    return this.setState({ total: price * qty })
   }
 
   componentDidMount() {
-    fetch("/.json")
-      .then(response => response.json())
-      .then(data => 
-        data.holdings.forEach( (holding) => {
-          if (holding.email === this.props.email) {
-            console.log("holding: ", holding)
-            this.setState(prevState => ({
-              holdings: [...prevState.holdings, holding]
-            }))
-          }
-        })
-      )
-      .then(this.setState({isLoading: false}))
-      .catch(err => {
-        console.log(err);
-      });
+    this.fetchAPI()
+    .then(data => 
+      data.holdings.forEach( (holding) => {
+        if (holding.email === this.props.email) {
+          console.log("holding: ", holding)
+          this.setState(prevState => ({
+            holdings: [...prevState.holdings, holding]
+          }))
+        }
+      })
+    )
+    .then(this.setState({isLoading: false}))
+    .catch(err => {console.log(err);});
   }
 
   onFormChange(evt) {
@@ -47,22 +70,27 @@ class Dashboard extends Component {
 
     let ticker = "";
     let qty = "";
-    let price = "";
     let type = "";
 
     if (elementname === "ticker") {
+
       ticker = element.value;
       this.setState({ ticker: ticker });
+      this.fetchPrice(ticker)
+
     } else if (elementname === "qty") {
+
       qty = element.value;
       this.setState({ qty: qty });
-    } else if (elementname === "price") {
-      price = element.value;
-      this.setState({ price: price });
+      this.calculateTotal(qty, this.state.price)
+
     } else if (elementname === "type") {
+
       type = element.value;
       this.setState({ type: type})
-    } 
+
+    }
+
   }
 
   // When a user clicks login
@@ -70,10 +98,11 @@ class Dashboard extends Component {
     evt.preventDefault();
     const transactionData = {
       email: this.props.email,
-      type: this.state.type,
       ticker: this.state.ticker,
+      price: this.state.price,
       qty: this.state.qty,
-      price: this.state.price
+      total: this.state.total,
+      type: this.state.type,
     };
     fetch("/new_transaction.json", {
       method: "POST",
@@ -83,18 +112,34 @@ class Dashboard extends Component {
         "Content-type": "application/json"
       }
     })
-    // .then(user => {
-    //   this.setState({
-    //     showAuth: false,          
-    //     showMain: true
-    //   })
-    // })
-    // this.setState({
-    //   name: "",
-    //   email: "",
-    //   password: ""
-    // })
+    this.setState({
+      ticker: "",
+      price: 0,
+      qty: 0,
+      total: 0
+    })
   }
+
+  // getPrice() {
+  //   return fetch(`https://ws-api.iextrading.com/1.0/stock/${this.state.ticker}/quote`)
+  //   .then ( (response) => response.json() )
+  //   .then( (responseJson) => {
+  //     this.setState({ 
+  //       price: responseJson.latestPrice,
+  //     })    
+  //   })
+  //   .catch((error) => {console.log(error)});
+  // }
+
+  // calculateTotal() {
+  //   this.setState({ 
+  //     total: this.state.price * this.state.qty
+  //   })   
+  //   // console.log("ticker: ", this.state.ticker)
+  //   // console.log("qty: ", this.state.qty)
+  //   // console.log("price: ", this.state.price)
+  //   // console.log("total: ", this.state.total)
+  // }
   
 
   render() {
@@ -116,6 +161,7 @@ class Dashboard extends Component {
                   this.state.holdings.map( (holding, key) => {
                   return (
                     <Ticker 
+                      key={key}
                       ticker={holding.ticker}
                       qty={holding.qty}
                     />
@@ -141,6 +187,11 @@ class Dashboard extends Component {
                     placeholder="ticker"
                   />
                 </div>
+
+                <div>
+                  <p> Price: {this.state.price} </p>
+                </div>
+
                 <div>
                   <input
                     type="number"
@@ -149,25 +200,19 @@ class Dashboard extends Component {
                     placeholder="qty"
                   />
                 </div>
-                <div>
-                  <input
-                    type="number"
-                    name="price"
-                    value={this.state.price}
-                    placeholder="price"
-                  />
-                </div>
 
                 <div>
-                  <p> {this.state.qty * this.state.price} USD </p>
+                  <p> Total: {this.state.total} </p>
                 </div>
-
-                <select name="type">
-                  <option value="Buy/Sell">Buy/Sell</option>
-                  <option value="Buy">Buy</option>
-                  <option value="Sell">Sell</option>
-                </select>
-
+                
+                <div>
+                  <select name="type">
+                    <option value="Buy/Sell">Buy/Sell</option>
+                    <option value="Buy">Buy</option>
+                    <option value="Sell">Sell</option>
+                  </select>
+                </div>
+   
                 <input
                   className="button"
                   type="button"

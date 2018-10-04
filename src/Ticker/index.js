@@ -17,23 +17,19 @@ class Stock extends Component {
           .then( (responseJson) => {
               let latest = responseJson.latestPrice
               let open = responseJson.open
-              console.log(latest, open)
               if (latest > open) {
-                console.log('1')
                 this.setState({ 
                   class: "green",
                   isLoading: false,
                   data: responseJson
                 })
               } else if (latest < open) {
-                console.log('2')
                 this.setState({ 
                   class: "green",
                   isLoading: false,
                   data: responseJson
                 })              
               } else {
-                console.log('3')
                 this.setState({ 
                   class: "green",
                   isLoading: false,
