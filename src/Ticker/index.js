@@ -7,6 +7,7 @@ class Stock extends Component {
     this.state = {
         isLoading: true,
         data: null,
+        class: "gray"
     }
   }
 
@@ -14,15 +15,37 @@ class Stock extends Component {
       return fetch(`https://ws-api.iextrading.com/1.0/stock/${this.props.ticker}/quote`)
           .then ( (response) => response.json() )
           .then( (responseJson) => {
-              this.setState({
+              let latest = responseJson.latestPrice
+              let open = responseJson.open
+              console.log(latest, open)
+              if (latest > open) {
+                console.log('1')
+                this.setState({ 
+                  class: "green",
                   isLoading: false,
-                  data: responseJson,
-              })
+                  data: responseJson
+                })
+              } else if (latest < open) {
+                console.log('2')
+                this.setState({ 
+                  class: "green",
+                  isLoading: false,
+                  data: responseJson
+                })              
+              } else {
+                console.log('3')
+                this.setState({ 
+                  class: "green",
+                  isLoading: false,
+                  data: responseJson
+                })              
+              }
           })
       .catch((error) => {
           console.log(error)
       });
   }
+
 
   render() {
     if (this.state.isLoading) {
@@ -41,7 +64,7 @@ class Stock extends Component {
             <p> {this.props.qty} Shares </p>
           </div>
           <div className="right">
-            <p> {this.state.data.latestPrice} </p>
+            <p className={this.state.class}> {this.state.data.latestPrice} </p>
           </div>
         </li>
       )
