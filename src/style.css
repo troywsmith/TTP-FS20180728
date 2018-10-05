@@ -109,7 +109,7 @@ body {
 }
 
 .left {
-  width: 30%;
+  width: 50%;
   text-align: left;
 }
 
@@ -119,9 +119,9 @@ body {
 }
 
 .right {
-  width: 30%;
+  width: 20%;
   text-align: right;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 

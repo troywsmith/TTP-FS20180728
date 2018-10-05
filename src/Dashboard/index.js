@@ -3,8 +3,6 @@ import "../style.css";
 
 // Components
 import Ticker from "../Ticker";
-import PriceFinder from "../PriceFinder";
-import CalculateTotal from "../Calculatetotal";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,6 +18,7 @@ class Dashboard extends Component {
       total: 0,
       type: "",
     };
+    this.onFormChange = this.onFormChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.fetchAPI = this.fetchAPI.bind(this)
   }
@@ -27,6 +26,19 @@ class Dashboard extends Component {
   fetchAPI() {
     return fetch("/.json")
     .then(response => response.json())
+    .then(data => 
+      data.holdings.forEach( (holding) => {
+        if (holding.email === this.props.email) {
+          console.log("holding: ", holding)
+          this.setState(prevState => ({
+            holdings: [...prevState.holdings, holding]
+          }))
+        }
+      })
+    )
+    .catch((error) => {
+      console.log(error)
+  });
   }
 
   fetchPrice(ticker) {
@@ -90,7 +102,6 @@ class Dashboard extends Component {
       this.setState({ type: type})
 
     }
-
   }
 
   // When a user clicks login
@@ -116,31 +127,13 @@ class Dashboard extends Component {
       ticker: "",
       price: 0,
       qty: 0,
-      total: 0
+      total: 0,
+      type: "",
     })
+
+    this.fetchAPI()
+
   }
-
-  // getPrice() {
-  //   return fetch(`https://ws-api.iextrading.com/1.0/stock/${this.state.ticker}/quote`)
-  //   .then ( (response) => response.json() )
-  //   .then( (responseJson) => {
-  //     this.setState({ 
-  //       price: responseJson.latestPrice,
-  //     })    
-  //   })
-  //   .catch((error) => {console.log(error)});
-  // }
-
-  // calculateTotal() {
-  //   this.setState({ 
-  //     total: this.state.price * this.state.qty
-  //   })   
-  //   // console.log("ticker: ", this.state.ticker)
-  //   // console.log("qty: ", this.state.qty)
-  //   // console.log("price: ", this.state.price)
-  //   // console.log("total: ", this.state.total)
-  // }
-  
 
   render() {
 
@@ -158,10 +151,10 @@ class Dashboard extends Component {
               <hr />
               <ul>
                 {this.state.holdings ?
-                  this.state.holdings.map( (holding, key) => {
+                  this.state.holdings.map( holding => {
                   return (
                     <Ticker 
-                      key={key}
+                      key={holding.id}
                       ticker={holding.ticker}
                       qty={holding.qty}
                     />

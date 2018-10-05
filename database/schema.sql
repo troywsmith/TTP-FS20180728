@@ -19,11 +19,12 @@ CREATE TABLE users (
 CREATE TABLE transactions (
   id SERIAL PRIMARY KEY,
   email TEXT,
-  type TEXT NOT NULL,
+  timestamp TEXT,
   ticker TEXT,
-  qty INTEGER CHECK (qty > 0),
   price INTEGER,
-  timestamp TEXT
+  qty INTEGER CHECK (qty > 0),
+  total INTEGER,
+  type TEXT NOT NULL
 );
 
 CREATE TABLE holdings (

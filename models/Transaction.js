@@ -8,13 +8,6 @@ Transaction.all = () => {
   FROM transactions`);
 };
 
-// Transaction.create = transaction => {
-//   return db.one(`
-//   INSERT INTO transactions (email, type, ticker, qty, price, timestamp) 
-//   VALUES ($<email>, $<type>, $<ticker>, $<qty>, $<price>, $<timestamp>) 
-//   RETURNING *`, transaction);
-// };
-
 Transaction.buy = data =>
   db.none(
     `
@@ -24,8 +17,8 @@ Transaction.buy = data =>
     SET cash = cash - ${data.qty * data.price}
     WHERE email = '${data.email}';
 
-    INSERT INTO transactions (email, type, ticker, qty, price, timestamp) 
-    VALUES ('${data.email}', '${data.type}', '${data.ticker}', ${data.qty}, ${data.price}, '${data.timestamp}') 
+    INSERT INTO transactions (email, timestamp, ticker, price, qty, total, type) 
+    VALUES ('${data.email}', '${data.timestamp}', '${data.ticker}', ${data.price}, ${data.qty}, ${data.total}, '${data.type}') 
     RETURNING *;
 
     INSERT INTO holdings (email, ticker, qty) 
@@ -35,12 +28,5 @@ Transaction.buy = data =>
     COMMIT;
     `, data
   );
-  
-  // CREATE TABLE holdings (
-  //   id SERIAL PRIMARY KEY,
-  //   email TEXT ,
-  //   ticker TEXT,
-  //   qty TEXT
-  // );
 
 module.exports = Transaction;

@@ -105,11 +105,12 @@ app.post('/new_transaction.json', (request, response) => {
   // console.log(request)
   const newTransaction = {
     email: request.body.email,
-    type: request.body.type,
-    ticker: request.body.ticker,
-    qty: request.body.qty,
-    price: request.body.price,
     timestamp: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
+    ticker: request.body.ticker,
+    price: request.body.price,
+    qty: request.body.qty,
+    total: request.body.total,
+    type: request.body.type,
   };
   console.log('create transaction:', newTransaction)
   Transaction.buy(newTransaction)
