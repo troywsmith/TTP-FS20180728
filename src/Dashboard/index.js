@@ -3,6 +3,7 @@ import "../style.css";
 
 // Components
 import Ticker from "../Ticker";
+import TotalBalance from '../TotalBalance';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Dashboard extends Component {
       qty: 0,
       total: 0,
       type: "",
+      balance: 0
     };
     this.onFormChange = this.onFormChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -42,11 +44,12 @@ class Dashboard extends Component {
   }
 
   fetchPrice(ticker) {
-    return fetch(`https://ws-api.iextrading.com/1.0/stock/${ticker}/quote`)
+    // return fetch(`https://ws-api.iextrading.com/1.0/stock/${ticker}/quote`)
+    return fetch(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${ticker}&types=quote`)
       .then ( (response) => response.json() )
       .then( (responseJson) => {
         this.setState({ 
-          price: responseJson.latestPrice
+          price: responseJson[Object.keys(responseJson)[0]].quote.latestPrice
         })    
       })
       .catch((error) => {
@@ -58,6 +61,13 @@ class Dashboard extends Component {
     return this.setState({ total: price * qty })
   }
 
+  addToBalance(price, qty) {
+    return this.setState(prevState => ({
+      balance: prevState.balance += price * qty
+    })
+    )
+  }
+
   componentDidMount() {
     this.fetchAPI()
     .then(data => 
@@ -67,6 +77,7 @@ class Dashboard extends Component {
           this.setState(prevState => ({
             holdings: [...prevState.holdings, holding]
           }))
+          this.addToBalance(this.state.price, this.state.qty)
         }
       })
     )
@@ -95,6 +106,7 @@ class Dashboard extends Component {
       qty = element.value;
       this.setState({ qty: qty });
       this.calculateTotal(qty, this.state.price)
+      this.addToBalance(qty, this.state.price)
 
     } else if (elementname === "type") {
 
@@ -164,7 +176,10 @@ class Dashboard extends Component {
                   
               </ul> 
               <hr />
-              <p> Total Balance = $5943.34 </p>
+              <TotalBalance 
+                cash={this.props.cash}
+                email={this.props.email}
+              />
             </div>
 
             <div className="section exchange">
